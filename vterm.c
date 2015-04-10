@@ -125,9 +125,10 @@ static int lvterm_new(lua_State* L) {
   lua_setmetatable(L, -2);
 
   lvterm->vterm = vterm_new(rows, cols);
-  vterm_state_set_bold_highbright(vterm_obtain_state(lvterm->vterm), 1);
 
+  vterm_state_set_bold_highbright(vterm_obtain_state(lvterm->vterm), 1);
   vterm_state_set_callbacks(vterm_obtain_state(lvterm->vterm), &callbacks, L);
+  vterm_state_reset(vterm_obtain_state(lvterm->vterm), 1);
 
   return 1;
 }
