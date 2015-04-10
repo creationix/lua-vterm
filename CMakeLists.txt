@@ -1,9 +1,17 @@
-PROJECT(vterm)
+project(vterm C)
 
 cmake_minimum_required(VERSION 2.6)
-MESSAGE(STATUS "CMAKE_SYSTEM_NAME is ${CMAKE_SYSTEM_NAME}")
+message(STATUS "CMAKE_SYSTEM_NAME is ${CMAKE_SYSTEM_NAME}")
 
-INCLUDE_DIRECTORIES(libvterm/include libvterm/src libvterm/src/encoding)
+find_package(PkgConfig)
+pkg_check_modules(LUA luajit)
+
+include_directories(
+  libvterm/include
+  libvterm/src
+  libvterm/src/encoding
+  ${LUA_INCLUDE_DIRS}
+)
 
 set(CMAKE_C_FLAGS "-g -std=c99 -Wall")
 
