@@ -16,6 +16,8 @@ include_directories(
 set(CMAKE_C_FLAGS "-g -std=c99 -Wall")
 
 add_library (vterm MODULE vterm.c
+  libvterm/src/encoding/DECdrawing.inc
+  libvterm/src/encoding/uk.inc
   libvterm/src/encoding.c
   libvterm/src/keyboard.c
   libvterm/src/mouse.c
@@ -26,6 +28,17 @@ add_library (vterm MODULE vterm.c
   libvterm/src/unicode.c
   libvterm/src/vterm.c
 )
+
+add_custom_command(
+  OUTPUT ${CMAKE_SOURCE_DIR}/libvterm/src/encoding/DECdrawing.inc
+  COMMAND perl -CSD ${CMAKE_SOURCE_DIR}/libvterm/tbl2inc_c.pl ${CMAKE_SOURCE_DIR}/libvterm/src/encoding/DECdrawing.tbl > ${CMAKE_SOURCE_DIR}/libvterm/src/encoding/DECdrawing.inc
+)
+
+add_custom_command(
+  OUTPUT ${CMAKE_SOURCE_DIR}/libvterm/src/encoding/uk.inc
+  COMMAND perl -CSD ${CMAKE_SOURCE_DIR}/libvterm/tbl2inc_c.pl ${CMAKE_SOURCE_DIR}/libvterm/src/encoding/uk.tbl > ${CMAKE_SOURCE_DIR}/libvterm/src/encoding/uk.inc
+)
+
 set_target_properties(vterm PROPERTIES OUTPUT_NAME "vterm")
 set_target_properties(vterm PROPERTIES PREFIX "")
 
